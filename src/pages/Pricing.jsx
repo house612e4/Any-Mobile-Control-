@@ -3,14 +3,33 @@ import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { plans } from '../config/plans';
 import { startSSLCommerzCheckout, startStripeCheckout } from '../lib/payments';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Pricing() {
+  const { user } = useAuth();
+
+  const handleSSL = async (plan) => {
+    try {
+      await startSSLCommerzCheckout({ plan, user });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleStripe = async (plan) => {
+    try {
+      await startStripeCheckout({ plan, user });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <section className="py-20">
       <Container>
         <h1 className="text-4xl font-bold text-white">Pricing</h1>
         <p className="mt-4 text-slate-300">
-          Choose a plan and pay securely with Bangladesh or international checkout.
+          Choose a plan and complete your payment securely.
         </p>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
@@ -31,17 +50,13 @@ export default function Pricing() {
                   <Button className="w-full">Start Free</Button>
                 ) : (
                   <>
-                    <Button
-                      className="w-full"
-                      onClick={() => startSSLCommerzCheckout(plan)}
-                    >
+                    <Button className="w-full" onClick={() => handleSSL(plan)}>
                       Pay with SSLCommerz
                     </Button>
-
                     <Button
                       className="w-full"
                       variant="secondary"
-                      onClick={() => startStripeCheckout(plan)}
+                      onClick={() => handleStripe(plan)}
                     >
                       Pay with Stripe
                     </Button>
