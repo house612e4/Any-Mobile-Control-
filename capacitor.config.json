@@ -1,6 +1,6 @@
 {
-  "appId": "com.mtstudio.ai",
-  "appName": "MT Studio AI",
+  "appId": "com.mtstudioai",
+  "appName": "MtStudio",
   "webDir": "www",
   "server": {
     "androidScheme": "https"
